@@ -1,12 +1,13 @@
 
 import './App.css'
+import Header from './pages/header/Header'
 
 function App() {
   
 
   return (
     <>
-      <button className="btn btn-primary">hi</button>
+      <Header/>
       
     </>
   )
