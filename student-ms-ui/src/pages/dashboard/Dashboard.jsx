@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
 import { Button, Col, Container, Row, Table } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 
 const Dashboard = () => {
 
     const [students, setStudents] = useState([]);
+    const navigate = useNavigate();
 
     useEffect( () => {
         const fetchStudents = async () => {
@@ -40,6 +42,10 @@ const Dashboard = () => {
         }
     }
 
+    const handleUpdate = (studentId) =>{
+        navigate(`/student/${studentId}`);
+    }
+
   return (
     <>
         <Container className="mt-5">
@@ -63,7 +69,7 @@ const Dashboard = () => {
                                     <td>{student.contact}</td>
                                     <td>{student.address}</td>
                                     <td>
-                                    <Button variant="outline-secondary">Update</Button>{" "}
+                                    <Button variant="outline-secondary" onClick={()=>handleUpdate(student.id)}>Update</Button>{" "}
                                     <Button className="" variant="outline-danger" onClick={()=>handleDelete(student.id)}>Delete</Button>
                                     </td>
                                 </tr>
