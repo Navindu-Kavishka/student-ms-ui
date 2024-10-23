@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import "./UpdateStudent.css"
 import { Button } from "react-bootstrap";
 import { Form } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const UpdateStudent = () => {
 
     const {id} = useParams();
+    const navigate = useNavigate();
     
     const [formData, setFormData] = useState({
         name: "",
@@ -41,10 +42,32 @@ const UpdateStudent = () => {
         fetchStudent();
     },{id})
 
+    const handleSubmit = async (e)=>{
+        e.preventDefault();
+        try {
+            const response = await fetch(`http://localhost:8080/student/${id}`,{
+                method:"PATCH",
+                headers:{
+                    "content-type":"application/json",
+                },
+                body:JSON.stringify(formData),
+        });
+
+        const data= await response.json();
+        console.log("Student Updated...",data);
+
+        navigate("/")
+        
+        } catch (error) {
+            console.log("Error Updating Student : ",error.message);
+            
+        }
+    }
+
   return (
     <div className="center-form">
       <h1>Edit Student Details</h1>
-      <Form >
+      <Form onSubmit={handleSubmit}>
         <Form.Group controlId="formBasicName">
             <Form.Control
                 type="text"
